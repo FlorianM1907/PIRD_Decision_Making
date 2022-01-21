@@ -1,11 +1,12 @@
-name: PsychrAn_cool-env
+name: PIRD-env
 
 channels:
   - conda-forge
 
 dependencies:
-  - python=3.8.8
-  - matplotlib=3.4.1
-  - numpy=1.20.2
-  - pandas=1.2.4
+  - python=3.9
+  - matplotlib=3.5.1
+  - pandas=1.3.3
+  - xrld=2.0.1
+  - numpy=1.21.2
 
