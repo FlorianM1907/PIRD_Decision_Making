@@ -1,43 +1,56 @@
 from typing import Union, Any
 
-import pandas as pd
+#import pandas as pd
 
 ##############################################################################################################
 #                 DEFINITION DES FONCTIONS DE RECUPERATION DE DONNEES DE L'UTILISATEUR                       #
 ##############################################################################################################
-
+"""
 def recuperate_file(name, index_sheet):
-    """Récupère une feuille du fichier Excel pour la transformer en objet liste """
+    #Récupère une feuille du fichier Excel pour la transformer en objet liste 
     feuille_recup = pd.read_excel(name, sheet_name=index_sheet)
+    print(feuille_recup.values.tolist())
     return feuille_recup.values.tolist()
+"""
 
-
-def fdico_economie(feuille):
+def fdico_economie(feuille=0):
     """ Définition du dictionnaire Economie contenant la correspondance entre l'index et son critère """
-    dico_economie = {}
+    dico_economie = {"Coût d'investissement propriétaire": 'g1.1', 'Coût de réinvestissement sur une durée de 15 ans': 'g1.2', 'Coût de réinvestissement sur une durée de 30 ans': 'g1.3', "Possibilité d'aides financières et subventions particulières": 'g1.4', 'Possibilité de répercussion sur charges locataires': 'g1.5', 'Coût de fonctionnement pour le locataire': 'g1.6', 'Coût de fonctionnement pour le propriétaire': 'g1.7', 'Rentabilité énergétique de la solution': 'g1.8'}
+    """
     for x in range(7,15):
         dico_economie[(feuille[x][2])] = (feuille[x][1])
+    print("eco",dico_economie)
+    """
     return dico_economie
 
-def fdico_technique(feuille):
+def fdico_technique(feuille=0):
     """ Définition du dictionnaire Technique contenant la correspondance entre l'index et son critère """
-    dico_technique = {}
+    dico_technique = {'Efficacité énergétique': 'g4.1', 'Lieu de production': 'g4.2', 'Impact environnemental (ACV)': 'g4.3', 'Consommation de ressources (ACV)': 'g4.4', "Impact sur l'épuisement des ressources rares (ACV)": 'g4.5', 'Recyclabilité (ACV)': 'g4.6', 'Déchets inhérent au cycle de vie (ACV)': 'g4.7'}
+    """
     for x in range(18, 22):
         dico_technique[(feuille[x][2])] = (feuille[x][1])
+    print("tech",dico_technique)
+    """
     return dico_technique
 
-def fdico_social(feuille):
+def fdico_social(feuille=0):
     """ Définition du dictionnaire Social contenant la correspondance entre l'index et son critère """
-    dico_social = {}
+    dico_social = {'Impact sur le coût pour le locataire': 'g3.1', 'Niveau de confort thermique': 'g3.2', 'Niveau de confort acoustique': 'g3.3', 'Esthétique et encombrement': 'g3.4', 'Actions à la charge du locataire': 'g3.5'}
+    """
     for x in range(25,30):
         dico_social[(feuille[x][2])] = (feuille[x][1])
+    print("soc",dico_social)
+    """
     return dico_social
 
-def fdico_environnement(feuille):
+def fdico_environnement(feuille=0):
     """ Définition du dictionnaire Environnement contenant la correspondance entre l'index et son critère """
-    dico_environnement = {}
+    dico_environnement = {'Facilité d’intégration au bâti existant': 'g2.1', 'Mise en œuvre en site occupé': 'g2.2', "Facilité d'entretien / Maintenance": 'g2.3', "Facilité de Comptage / Pilotage / Gestion de l'énergie": 'g2.4'}
+    """"
     for x in range(33,40):
         dico_environnement[(feuille[x][2])] = (feuille[x][1])
+    print("env",dico_environnement)
+    """
     return dico_environnement
 
 def tableau_choix(feuille,dico,index):
@@ -51,6 +64,8 @@ def tableau_choix(feuille,dico,index):
             tableau_choix_environnement[x - a][y - 1]=str(feuille[x][y])
             if (dico.get(tableau_choix_environnement[x - a][y - 1], 1) != 1) :
                 tableau_choix_environnement[x - a][y - 1] = dico.get(tableau_choix_environnement[x - a][y - 1])
+    print("feuille",feuille[index[1]+1][2])
+    print("tab choix",tableau_choix_environnement)
     return tableau_choix_environnement, feuille[index[1]+1][2]
 
 """ DONNEES MURS !
@@ -319,11 +334,12 @@ def calcul_ki(l,K_2prime,n):
 
 def SRF():
     #Récupération des feuilles depuis l'excel de choix des critères
-    feuille1 = recuperate_file('Pondération critères.xlsm', 0)
-    feuille2 = recuperate_file('Pondération critères.xlsm', 1)
-    feuille3 = recuperate_file('Pondération critères.xlsm', 2)
+    #feuille1 = recuperate_file('Pondération critères.xlsm', 0)
+    #feuille2 = recuperate_file('Pondération critères.xlsm', 1)
+    #feuille3 = recuperate_file('Pondération critères.xlsm', 2)
 
     #Définition des critères et de leur index
+    feuille1=0
     dico_economie = fdico_economie(feuille1)
     dico_environnement = fdico_environnement(feuille1)
     dico_social = fdico_social(feuille1)
@@ -336,10 +352,16 @@ def SRF():
     index_technique = [45,60]
 
     #Récupération du tableau des choix de l'utilisateur
+    """
     tableau_choix_environnement, z_environnement = tableau_choix(feuille2,dico_environnement,index_environnement)
     tableau_choix_economie, z_economie = tableau_choix(feuille2,dico_economie,index_economie)
     tableau_choix_technique, z_technique = tableau_choix(feuille2,dico_technique,index_technique)
     tableau_choix_social, z_social = tableau_choix(feuille2,dico_social,index_social)
+    """
+    tableau_choix_environnement, z_environnement = [[1, 'g4.1', 'nan', 'nan'], [2, 'nan', 'nan', 'nan'], [3, 'g4.2', 'nan', 'nan'], [4, 'nan', 'nan', 'nan'], [5, 'nan', 'nan', 'nan'], [6, 'nan', 'nan', 'nan'], [7, 'nan', 'nan', 'nan'], [8, 'nan', 'nan', 'nan'], [9, 'nan', 'nan', 'nan'], [10, 'nan', 'nan', 'nan'], [11, 'nan', 'nan', 'nan'], [12, 'nan', 'nan', 'nan'], [13, 'nan', 'nan', 'nan'], [14, 'nan', 'nan', 'nan'], [15, 'nan', 'nan', 'nan']], 2
+    tableau_choix_economie, z_economie = [[1, 'g1.1', 'g1.6', 'nan'], [2, 'g1.7', 'nan', 'nan'], [3, 'nan', 'nan', 'nan'], [4, 'g1.8', 'nan', 'nan'], [5, 'nan', 'nan', 'nan'], [6, 'g1.5', 'nan', 'nan'], [7, 'g1.2', 'nan', 'nan'], [8, 'g1.3', 'nan', 'nan'], [9, 'nan', 'nan', 'nan'], [10, 'nan', 'nan', 'nan'], [11, 'nan', 'nan', 'nan'], [12, 'g1.4', 'nan', 'nan'], [13, 'nan', 'nan', 'nan'], [14, 'nan', 'nan', 'nan'], [15, 'nan', 'nan', 'nan']], 8
+    tableau_choix_technique, z_technique = [[1, 'g2.2', 'g2.4', 'g2.1'], [2, 'g2.3', 'nan', 'nan'], [3, 'nan', 'nan', 'nan'], [4, 'nan', 'nan', 'nan'], [5, 'nan', 'nan', 'nan'], [6, 'nan', 'nan', 'nan'], [7, 'nan', 'nan', 'nan'], [8, 'nan', 'nan', 'nan'], [9, 'nan', 'nan', 'nan'], [10, 'nan', 'nan', 'nan'], [11, 'nan', 'nan', 'nan'], [12, 'nan', 'nan', 'nan'], [13, 'nan', 'nan', 'nan'], [14, 'nan', 'nan', 'nan'], [15, 'nan', 'nan', 'nan']], 4
+    tableau_choix_social, z_social = [[1, 'g3.2', 'g3.1', 'g3.3'], [2, 'g3.5', 'nan', 'nan'], [3, 'g3.4', 'nan', 'nan'], [4, 'nan', 'nan', 'nan'], [5, 'nan', 'nan', 'nan'], [6, 'nan', 'nan', 'nan'], [7, 'nan', 'nan', 'nan'], [8, 'nan', 'nan', 'nan'], [9, 'nan', 'nan', 'nan'], [10, 'nan', 'nan', 'nan'], [11, 'nan', 'nan', 'nan'], [12, 'nan', 'nan', 'nan'], [13, 'nan', 'nan', 'nan'], [14, 'nan', 'nan', 'nan'], [15, 'nan', 'nan', 'nan']], 5
 
     tableau = traitement(tableau_choix_economie)
 
@@ -378,7 +400,8 @@ def SRF():
         dico_weights[dico[i][0]] = dico[i][1]
     print(dico_weights)
     return dico_weights
-    #for i in range(0,len(tableau)):
-     #   print(str(tableau[i][0])+" "+str(tableau[i][13]))
-    #print("Somme des poids = "+str(total))
+    for i in range(0,len(tableau)):
+        print(str(tableau[i][0])+" "+str(tableau[i][13]))
+    print("Somme des poids = "+str(total))
 
+SRF()
